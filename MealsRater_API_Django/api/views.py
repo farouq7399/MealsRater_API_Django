@@ -17,6 +17,7 @@ class MealViewSet(viewsets.ModelViewSet):
         if 'star' in request.data:
             """
             create or update 
+            First get data sent from request and pull from database 
             """
             meal = Meal.objects.get(id=pk)
             star = request.data['star']
@@ -28,7 +29,7 @@ class MealViewSet(viewsets.ModelViewSet):
                 rating = Rating.objects.get(user=user.id, meal=meal.id)
                 rating.star =star
                 rating.save()
-                serializer = RatingSerializer(rating, Many=False)
+                serializer = RatingSerializer(rating, many=False)
                 json = {
                     'message': 'Meal Rate Updated',
                     'result': serializer.data
